@@ -1,0 +1,16 @@
+dist
+node_modules
+.DS_Store
+Calculator
+src
+package.json
+package-lock.json
+tsconfig*.json
+tsconfig*.tsbuildinfo
+vite.config.*
+tailwind.config.js
+postcss.config.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*

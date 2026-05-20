@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="CookBoss เครื่องคำนวณต้นทุน กำไร และราคาขายขนมไทย ใช้ง่าย ไม่ต้องใช้ Excel"
+    />
+    <title>CookBoss กำไรขนมไทย</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main>
+      <section class="hero" id="hero">
+        <div class="hero__content">
+          <p class="pill">CookBoss กำไรขนมไทย</p>
+          <h1>คำนวณต้นทุน-กำไรขนมของคุณในไม่กี่นาที</h1>
+          <p class="hero__copy">
+            ไม่ต้องใช้ Excel ไม่ต้องจำสูตร แค่กรอกข้อมูลทีละขั้น แล้วลองคำนวณก่อนว่าแผนนี้ขายแล้วคุ้มไหม
+          </p>
+          <button class="btn btn--gold" id="startButton" type="button">ลองคำนวณก่อน</button>
+        </div>
+        <div class="hero__strip">
+          <span>ต้นทุนต่อหน่วยขาย</span>
+          <span>กำไรต่อรอบ</span>
+          <span>ราคาขายที่ควรพิจารณา</span>
+        </div>
+      </section>
+
+      <section class="app is-hidden" id="calculator">
+        <section class="prep-card" id="prepCard">
+          <p class="eyebrow">ก่อนเริ่มคำนวณ</p>
+          <h2>เตรียมข้อมูล 3 อย่างนี้ไว้คร่าว ๆ</h2>
+          <p>
+            เว็บนี้ช่วยคำนวณก่อนลงมือทำจริง เพื่อให้คุณรู้ก่อนว่าเมนูนี้ขายแล้วคุ้มไหม
+            ไม่จำเป็นต้องรู้ตัวเลขเป๊ะทุกบาท แต่ควรมีสูตรหรือข้อมูลคร่าว ๆ ก่อนเริ่ม
+          </p>
+          <div class="prep-list">
+            <article>
+              <strong>1</strong>
+              <span>สูตรที่อยากลองทำ เช่น สูตรที่คุณใช้ สูตรตัวเอง หรือสูตรที่จดไว้</span>
+            </article>
+            <article>
+              <strong>2</strong>
+              <span>จำนวนที่สูตรบอกว่าจะได้ เช่น ทำได้ประมาณ 30 ถ้วย</span>
+            </article>
+            <article>
+              <strong>3</strong>
+              <span>ราคาวัตถุดิบ แพ็กเกจ และราคาขายที่อยากลองตั้ง</span>
+            </article>
+          </div>
+          <button class="btn" id="readyButton" type="button">พร้อมแล้ว เริ่มคำนวณ</button>
+        </section>
+
+        <div class="wizard-area is-hidden" id="wizardArea">
+          <header class="topbar">
+            <div>
+              <p class="eyebrow">CookBoss</p>
+              <h2>คำนวณกำไรขนมไทย</h2>
+            </div>
+            <p>กรอกทีละขั้นเพื่อวางแผนก่อนซื้อของและเริ่มขายจริง</p>
+          </header>
+
+          <nav class="steps" aria-label="ขั้นตอนการคำนวณ">
+            <button class="step is-active" type="button" data-step="0">1 เมนู</button>
+            <button class="step" type="button" data-step="1">2 จำนวน</button>
+            <button class="step" type="button" data-step="2">3 วัตถุดิบ</button>
+            <button class="step" type="button" data-step="3">4 แพ็กเกจ</button>
+            <button class="step" type="button" data-step="4">5 ค่าแฝง</button>
+            <button class="step" type="button" data-step="5">6 ราคาขาย</button>
+            <button class="step" type="button" data-step="6">7 สรุปแผน</button>
+          </nav>
+
+          <form class="panel" id="cookbossForm">
+          <section class="page is-active" data-page="0">
+            <h3>เริ่มจากชื่อเมนู</h3>
+            <p class="muted">ใส่ชื่อเมนูที่อยากลองคำนวณก่อนลงมือทำจริง</p>
+            <div class="grid">
+              <label>
+                <span>ชื่อเมนู</span>
+                <input id="menuName" type="text" placeholder="เช่น ขนมถ้วย, วุ้นกะทิ" />
+              </label>
+            </div>
+            <div class="tip">ถ้าไม่กรอกชื่อ ระบบจะใช้ “เมนูของฉัน”</div>
+          </section>
+
+          <section class="page" data-page="1">
+            <h3>วางแผนจำนวนที่จะขาย</h3>
+            <p class="muted">
+              บอกระบบก่อนว่า 1 กล่องมีขนมกี่ชิ้น และรอบนี้อยากลองขายกี่กล่อง ระบบจะคำนวณให้ว่า ต้องเตรียมขนมทั้งหมดกี่ชิ้นก่อนลงมือทำจริง
+            </p>
+            <div class="grid grid--two">
+              <label>
+                <span>หน่วยขาย</span>
+                <small>ตัวอย่าง: กล่อง, ชุด, ถุง</small>
+                <input id="sellingUnitName" type="text" value="กล่อง" placeholder="กล่อง" />
+              </label>
+              <label>
+                <span id="piecesPerSellingUnitLabel">1 กล่องมีขนมกี่ชิ้น/ถ้วย</span>
+                <small>เช่น ขนมถ้วย 1 กล่องมี 6 ถ้วย หรือวุ้น 1 กล่องมี 4 ชิ้น</small>
+                <input id="piecesPerSellingUnit" type="number" min="0" inputmode="decimal" value="6" />
+              </label>
+              <label>
+                <span>เรียกขนมแต่ละชิ้นว่าอะไร</span>
+                <small>ตัวอย่าง: ชิ้น, ถ้วย, ลูก, ก้อน</small>
+                <input id="innerUnitName" type="text" value="ชิ้น" placeholder="ชิ้น" />
+              </label>
+              <label>
+                <span id="plannedSellingUnitsLabel">รอบนี้อยากลองขายกี่กล่อง</span>
+                <small>ใส่จำนวนที่อยากทดลองขายก่อน ยังไม่ต้องเป็นตัวเลขหลังทำจริง</small>
+                <input id="plannedSellingUnits" type="number" min="0" inputmode="decimal" value="20" />
+              </label>
+            </div>
+            <div class="plan-summary" id="planSummary">
+              ถ้าขาย 20 กล่อง กล่องละ 6 ชิ้น คุณต้องเตรียมทั้งหมด 120 ชิ้น
+            </div>
+            <div class="optional-block">
+              <h4>ถ้ารู้ว่าสูตรนี้คาดว่าจะได้กี่ชิ้นต่อ 1 รอบ ให้ใส่ตรงนี้</h4>
+              <label>
+                <span id="estimatedRecipeYieldLabel">จากสูตรนี้ คาดว่าจะได้ประมาณกี่ชิ้น/ถ้วย</span>
+                <small>ดูจากสูตรที่คุณใช้ เช่น ในสูตรอาจเขียนว่า “ทำได้ประมาณ 30 ถ้วย” ถ้ายังไม่รู้ สามารถข้ามได้</small>
+                <input id="estimatedRecipeYield" type="number" min="0" inputmode="decimal" />
+              </label>
+              <button class="link-button" id="skipRecipeYield" type="button">ยังไม่รู้ ข้ามขั้นนี้</button>
+              <p class="batch-summary is-hidden" id="batchSummary">จากแผนนี้ คุณต้องเตรียมทั้งหมด 120 ถ้วย ถ้าสูตรนี้ทำได้ประมาณ 30 ถ้วยต่อรอบ คุณต้องทำประมาณ 4 รอบสูตร</p>
+              <p class="recipe-note" id="recipeYieldNote">ยังไม่ได้คำนวณจำนวนรอบสูตร เพราะยังไม่ได้ใส่จำนวนที่สูตรคาดว่าจะได้</p>
+            </div>
+            <p class="warning is-hidden" id="plannedQuantityWarning">กรุณากรอกจำนวนต่อหน่วยขายและจำนวนที่อยากลองขายก่อนคำนวณ</p>
+          </section>
+
+          <section class="page" data-page="2">
+            <div class="section-head">
+              <div>
+                <h3>ต้นทุนวัตถุดิบ</h3>
+                <p class="muted">กรอกละเอียดเพื่อให้แม่นขึ้น หรือเปิดโหมดง่ายแล้วใส่ยอดรวมเองได้</p>
+              </div>
+              <label class="toggle">
+                <input id="ingredientSimple" type="checkbox" />
+                <span>กรอกยอดรวมเอง</span>
+              </label>
+            </div>
+            <div id="ingredientDetailed">
+              <div id="ingredients"></div>
+              <button class="btn btn--secondary" id="addIngredient" type="button">เพิ่มวัตถุดิบ</button>
+            </div>
+            <div class="is-hidden" id="ingredientSimpleBox">
+              <label>
+                <span>ต้นทุนวัตถุดิบรวมต่อรอบ</span>
+                <input id="ingredientManual" type="number" min="0" inputmode="decimal" />
+              </label>
+            </div>
+            <div class="total-box">
+              <span>ต้นทุนวัตถุดิบรวม</span>
+              <strong id="ingredientTotal">฿0</strong>
+            </div>
+            <div class="tip">ซื้อกะทิ 1,000 มล. ราคา 80 บาท วางแผนใช้ในสูตร 700 มล. ระบบจะคิดต้นทุน 56 บาท</div>
+          </section>
+
+          <section class="page" data-page="3">
+            <div class="section-head">
+              <div>
+                <h3>ต้นทุนแพ็กเกจ</h3>
+                <p class="muted">อย่าลืมคิดกล่อง ถุง สติกเกอร์ และช้อนด้วย</p>
+              </div>
+              <label class="toggle">
+                <input id="packagingSimple" type="checkbox" />
+                <span>กรอกยอดรวมเอง</span>
+              </label>
+            </div>
+            <div id="packagingDetailed">
+              <div id="packaging"></div>
+              <button class="btn btn--secondary" id="addPackaging" type="button">เพิ่มแพ็กเกจ</button>
+            </div>
+            <div class="is-hidden" id="packagingSimpleBox">
+              <label>
+                <span id="packagingManualLabel">ต้นทุนแพ็กเกจต่อกล่อง</span>
+                <input id="packagingManual" type="number" min="0" inputmode="decimal" />
+              </label>
+            </div>
+            <div class="summary-pair">
+              <div class="total-box">
+                <span id="packagingPerUnitLabel">แพ็กเกจต่อกล่อง</span>
+                <strong id="packagingPerUnit">฿0</strong>
+              </div>
+              <div class="total-box total-box--light">
+                <span>แพ็กเกจทั้งรอบ</span>
+                <strong id="packagingTotal">฿0</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="page" data-page="4">
+            <h3>ค่าใช้จ่ายแฝง</h3>
+            <p class="muted">ค่าแฝงคือค่าแก๊ส ค่าไฟ ค่าน้ำ ค่าเดินทาง และของเสียเล็ก ๆ น้อย ๆ ที่มักลืมคิด</p>
+            <div class="choice-grid">
+              <label><input type="radio" name="overhead" value="none" /> ไม่คิดค่าแฝง</label>
+              <label><input type="radio" name="overhead" value="percent10" checked /> คิด 10%</label>
+              <label><input type="radio" name="overhead" value="percent15" /> คิด 15%</label>
+              <label><input type="radio" name="overhead" value="custom" /> กรอกเอง</label>
+            </div>
+            <label class="is-hidden" id="overheadCustomBox">
+              <span>ค่าแฝงรวมต่อรอบ</span>
+              <input id="overheadCustom" type="number" min="0" inputmode="decimal" />
+            </label>
+            <div class="total-box">
+              <span>ค่าแฝงที่นำไปคิดในรอบนี้</span>
+              <strong id="overheadTotal">฿0</strong>
+            </div>
+          </section>
+
+          <section class="page" data-page="5">
+            <h3>ตั้งราคาขาย</h3>
+            <p class="muted">ใส่ราคาที่อยากขายต่อหน่วยขาย แล้วดูราคาที่แนะนำได้ทันที</p>
+            <label>
+              <span id="sellingPriceLabel">ราคาขายต่อกล่อง</span>
+              <small id="costHint">ต้นทุนต่อกล่องตอนนี้คือ ฿0</small>
+              <input id="sellingPrice" type="number" min="0" inputmode="decimal" />
+            </label>
+            <p class="warning is-hidden" id="lossWarning">ราคานี้อาจขายแล้วขาดทุน ควรปรับราคาขายหรือปรับต้นทุนก่อน</p>
+            <div class="suggestions" id="suggestionButtons"></div>
+          </section>
+
+          <section class="page" data-page="6">
+            <h3>พร้อมดูแผนทดลองขายแล้ว</h3>
+            <p class="muted">หน้านี้รวมต้นทุน กำไรโดยประมาณ ราคาขายที่แนะนำ และปุ่มบันทึกเป็นรูปภาพ</p>
+          </section>
+
+          <div class="nav-row">
+            <button class="btn btn--secondary" id="backButton" type="button">ย้อนกลับ</button>
+            <button class="btn" id="nextButton" type="button">ขั้นต่อไป</button>
+          </div>
+          </form>
+
+          <section class="result is-hidden" id="resultCard">
+          <div class="result__head">
+            <div>
+              <span>จากแผนนี้ ถ้าขายหมด คุณจะได้ประมาณ...</span>
+              <h3 id="resultMenu">เมนูของฉัน</h3>
+              <p id="resultPlan">วางแผนขาย 20 กล่อง</p>
+            </div>
+            <strong class="status" id="statusLabel">ยังกรอกไม่ครบ</strong>
+          </div>
+          <p class="status-copy" id="statusMessage">กรอกแผนจำนวนที่จะขายและราคาขายก่อน ระบบจึงจะลองคำนวณกำไรได้ครบ</p>
+          <div class="planning-grid">
+            <div><span id="resultPiecesPerUnitText">1 กล่องมี</span><strong id="resultPiecesPerUnit">6 ชิ้น</strong></div>
+            <div><span id="resultPlannedUnitsText">วางแผนขาย</span><strong id="resultPlannedUnits">20 กล่อง</strong></div>
+            <div><span>ต้องเตรียมทั้งหมด</span><strong id="resultTotalPieces">120 ชิ้น</strong></div>
+            <div class="is-hidden" id="resultBatchBox"><span>จำนวนรอบสูตร</span><strong id="resultBatchMultiplier">4 รอบสูตร</strong></div>
+          </div>
+          <p class="recipe-note" id="resultRecipeYieldNote">ยังไม่ได้คำนวณจำนวนรอบสูตร เพราะยังไม่ได้ใส่จำนวนที่สูตรคาดว่าจะได้</p>
+          <div class="result-grid">
+            <div><span>ต้นทุนรวมประมาณ</span><strong id="totalCost">฿0</strong></div>
+            <div><span id="costPerPieceText">ต้นทุนต่อชิ้นประมาณ</span><strong id="costPerPiece">฿0</strong></div>
+            <div><span id="costPerSellingUnitText">ต้นทุนต่อกล่องประมาณ</span><strong id="costPerSellingUnit">฿0</strong></div>
+            <div><span id="sellingText">ราคาขายต่อกล่อง</span><strong id="sellingValue">฿0</strong></div>
+            <div><span id="profitText">กำไรต่อกล่องประมาณ</span><strong id="profitPerSellingUnit">฿0</strong></div>
+            <div><span>รายรับรวมถ้าขายหมดประมาณ</span><strong id="totalRevenue">฿0</strong></div>
+            <div><span>กำไรรวมถ้าขายหมดประมาณ</span><strong id="totalProfit">฿0</strong></div>
+            <div><span>เปอร์เซ็นต์กำไร</span><strong id="profitMargin">0%</strong></div>
+            <div><span>บวกจากต้นทุน</span><strong id="markup">0%</strong></div>
+          </div>
+          <p class="important-note">
+            ตัวเลขนี้เป็นการคำนวณก่อนลงมือทำจริง เพื่อช่วยให้คุณตัดสินใจก่อนซื้อของและเริ่มขายจริง
+            ต้นทุนจริงอาจเปลี่ยนได้ตามราคาวัตถุดิบ ขนาดชิ้น และของเสียระหว่างทำ
+          </p>
+          <h4>ราคาขายที่น่าลอง</h4>
+          <div class="price-cards" id="priceCards"></div>
+          <div class="action-row">
+            <button class="btn" id="exportButton" type="button">บันทึกแผนเป็นรูปภาพ</button>
+            <button class="btn btn--secondary" id="resetButton" type="button">คำนวณใหม่</button>
+          </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
