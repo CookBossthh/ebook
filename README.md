@@ -1,20 +1,22 @@
-# CookBoss กำไรขนมไทย
+# CookBoss Profit Assistant
 
-เวอร์ชันนี้เป็น HTML/CSS/JavaScript ล้วน เปิดใช้งานได้ทันทีโดยไม่ต้องติดตั้ง npm, Vite หรือ React
+ระบบคำนวณต้นทุน-กำไรอัจฉริยะสำหรับคนเริ่มขายเบเกอรี่
 
-## วิธีลองใช้
+## แนวคิดหลัก
 
-เปิดไฟล์นี้ในเบราว์เซอร์:
+แอปนี้ออกแบบเป็นผู้ช่วยแบบ mobile-first:
 
-```text
-/Users/pol/Webapp/index.html
-```
+- ถามทีละขั้น
+- คำนวณสด
+- แปลผลเป็นภาษาคน
+- แนะนำว่าควรทำอะไรต่อก่อนเปิดรับออเดอร์จริง
 
-ไฟล์หลัก:
+## Deployment
+
+Repo นี้ deploy เป็น static site ผ่าน GitHub Pages
+
+ไฟล์หลักที่ใช้บนหน้าเว็บ:
 
 - `index.html`
-- `styles.css`
-- `script.js`
-- `public/cookboss-dessert.png`
-
-สามารถอัปขึ้น GitHub Pages ได้เลย เพราะเป็น static files ทั้งหมด
+- `assets/`
+- `cookboss-dessert.png`
